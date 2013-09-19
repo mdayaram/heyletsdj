@@ -1,0 +1,4 @@
+backends:
+- name: playlist
+  class: B1
+  #options: dynamic

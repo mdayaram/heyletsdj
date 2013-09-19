@@ -1,0 +1,21 @@
+GAREN
+p0
+p1
+- sync playback
+p2
+- Iconset for PlayPauseStopNext
+- Only allow PlayPauseStopNext at appropriate times.
+- Add other vendor prefixes to CSS3 style
+p3
+- background fade on scrolling
+
+DAVE
+p0
+- upvoting a song to the top of the list, while the list is playing, changed the video entry of the first entry. AFAIK the [0] item of the playlist, when the playist.status != 'stopped' should always be the currently paused or playing.
+- when songs are skipped 
+p1
+- playlist ordering
+- added song shows as voted on other playlists
+p2
+p3
+p4

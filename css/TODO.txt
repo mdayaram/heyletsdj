@@ -1,0 +1,7 @@
+GAREN
+p0
+- update playlist state when player state updates
+p1
+- sync playback
+p2
+- Add other vendor prefixes to CSS3 style

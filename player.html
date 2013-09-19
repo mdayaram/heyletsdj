@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type='text/javascript' src='/js/ytcrossfade-v3-jank.js'></script>
+<title>HeyLetsDJ/{{ playlistId }}</title>
+<script src="/_ah/channel/jsapi"></script>
+<script src="/js/jquery.min.js"></script> 
+<script src="/js/heyletsdj.js"></script> 
+<script type='text/javascript'>
+var heyLetsDj = new HeyLetsDj('{{ playlistId }}');
+</script>
+<style>
+@import url(http://fonts.googleapis.com/css?family=Armata|Audiowide);
+html, body {
+  background: #000;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-family: 'Armata'
+}
+#top-row {
+  position: absolute;
+  width: 100%;
+  height: 1.9em;
+  background-color: #111;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid #444;
+}
+#top-row #branding-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2em;
+  overflow: hidden;
+  width: 50%;
+  line-height: 2em;
+  box-sizing: border-box;
+  padding: 0 0.5em;
+  z-index: 1;
+}
+#top-row #branding-container .brand {
+  font-family: 'Audiowide';
+  text-transform: uppercase;
+  color: #aaa;
+  display: inline-block;
+  float: left;
+}
+#top-row #branding-container .playlist {
+  color: #fff;
+  display: inline-block;
+  float: left;
+  margin-left: 0.3em;
+  font-size: 0.8em;
+}
+#top-row #controls-container {
+  position: absolute;
+  top:0;
+  right: 0;
+  height: 2em;
+  overflow: hidden;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0 0.4em;
+  text-align: right;
+  z-index: 2;
+  line-height: 2em;
+}
+#top-row #controls-container .controls {
+  margin-left: 0.6em;
+  height: 100%;
+  display: inline-block;
+  opacity: 0.7;
+}
+#top-row #controls-container .controls:hover {
+  opacity: 1;
+}
+#top-row #controls-container .control {
+  display: inline-block;
+  float: left;
+  box-sizing: border-box;
+  padding: 0 0.3em;
+  background: -webkit-gradient(linear, left top, left bottom, from(#b10d83), to( #94055f )); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #b10d83,   #94055f); /* for firefox 3.6+ */
+  height: 1.4em;
+  font-size: 0.9em;
+  min-width: 2.5em;
+  text-align: center;
+  line-height: 1.4em;
+  border-right: 1px solid rgba(0,0,0,0.3);
+  margin: 0.3em 0;
+  cursor: pointer;
+  opacity: 0.8;
+}
+#top-row #controls-container .control:hover {
+  opacity: 1;
+}
+#top-row #controls-container .control:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+#top-row #controls-container .control:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+#ytplayer-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 2em;
+  box-sizing:border-box;
+}
+#ytplayer-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-top: 2em;
+  box-sizing:border-box;
+  background-color: transparent;
+  z-index: 999;
+  text-align: center;
+  -webkit-transition: opacity 0.5s;
+}
+#ytplayer-overlay.hidden {
+  opacity: 0;
+}
+#ytplayer-overlay-disclaimer {
+  max-width: 800px;
+  display: inline-block;
+  background-color: #ccc;
+  color: #000;
+  margin: -1px auto 0 auto;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 0.7em;
+  z-index: 9999;
+  border-radius: 2px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border: 1px solid #444;
+  box-shadow: 0px 3px 5px #444;
+}
+
+.control embed {
+  width: 15px;
+  height: 15px;
+  margin-top: 4px;
+}
+#next.control embed {
+  width: 25px;
+}
+.control {
+  position: relative;
+}
+.control .overlay {
+  position: absolute;
+  background: transparent;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+</style>
+</head>
+<body>
+<div id='ytplayer-container'></div>
+<div id='ytplayer-overlay' class='hidden'>
+  <div id='ytplayer-overlay-disclaimer'>Use the controls in the upper-right corner, not the player controls.</div>
+</div>
+<div id='top-row'>
+  <div id='branding-container'>
+    <a href='../{{ playlistId }}' target='_blank'>
+      <div class='brand'>Hey Let's DJ</div>
+      <div class='playlist'>/{{ playlistId }}</div>    
+    </a>
+  </div>
+  <div id='controls-container'>
+    <div class='controls'>
+      <div class='control' id='stop'>
+        <embed src="./../assets/stop.svg" type="image/svg+xml" />
+        <div class='overlay'></div>
+      </div>
+      <div class='control' id='play'>
+        <embed src="./../assets/play.svg" type="image/svg+xml" />
+        <div class='overlay'></div>
+      </div>
+      <div class='control' id='pause'>
+        <embed src="./../assets/pause.svg" type="image/svg+xml" />
+        <div class='overlay'></div>
+      </div>
+      <div class='control' id='next'>
+        <embed src="./../assets/next.svg" type="image/svg+xml" />
+        <div class='overlay'></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+// ytcrossfade.init('ytplayer-container', ['OJBfv9CHlcw', 'vKNcuTWzTVw', 'OJBfv9CHlcw'], true);
+//ytcrossfade.init('ytplayer-container', ['OJBfv9CHlcw', 'vKNcuTWzTVw', 'OJBfv9CHlcw'], false);
+// ytcrossfade.init('ytplayer-container', 'j2WWrupMBAE');
+
+function log(t) {
+  console.log(t);
+}
+
+heyLetsDj.onPlayerUpdate = updatePlayer;
+heyLetsDj.onPlaylistUpdate = updatePlaylist;
+
+function ytcrossfadeOnPlayerStateChange() {
+  return 1;
+}
+
+
+function updatePlaylist() {
+  var playlist = [];
+  $.each(heyLetsDj.playlist, function(i,entry){
+    if ((heyLetsDj.status != 'stopped') && (i > 0)) {
+      playlist.push(entry.videoId);
+    }
+  });
+  ytcrossfade.replacePlaylist( playlist );
+  log('Updated playlist.');
+}
+
+function ytcrossfadeDoneInit() {
+  updatePlayer();
+  updatePlaylist();
+}
+
+var lastSkipped = +new Date();
+function updatePlayer() {
+  if ( ytcrossfade.hasInit == false ) {
+    // Assume the player hasn't initialized, so lets do that.
+    var playing = false;
+    if (heyLetsDj.status == 'playing') {
+      var playing = true;
+    }
+    // Initilize the playerz with the first song and it's playstatus.
+    ytcrossfade.init('ytplayer-container', heyLetsDj.playlist[0].videoId, playing);
+  } else {
+    // The player has initialized.
+    if ( heyLetsDj.status == 'stopped' ) {
+      // The playback status is stopped, so let's stop the current video immeditately.
+      ytcrossfade.getCurrentPlayer().stopVideo();
+      return 0;
+    }
+
+    // The status is playing or paused.
+    var player = ytcrossfade.getCurrentPlayer();
+    // If the current playing video isn't the one playing, replace this.
+    playerYtid = player.getVideoUrl().substring( player.getVideoUrl().length-11 );
+    if (playerYtid != heyLetsDj.playlist[0].videoId) {
+      ytcrossfade.immediatelyPlayVideo( heyLetsDj.playlist[0].videoId );
+      return 3;
+    }
+    // The correct ytid is playing.
+    if (( heyLetsDj.status == 'playing' ) && (player.getPlayerState() != 1) && (player.getPlayerState() != 3)) {
+      // If the player is supposed to be playing, but it isn't playing or buffering, play it.
+      player.playVideo();
+    } else if (( heyLetsDj.status == 'paused' ) && (player.getPlayerState() != 2)) {
+      // Player should be paused but it isn't. So pause it.
+      player.pauseVideo();
+    }
+    // Make sure the timing is sync'd.
+    var timeDiff = Math.abs( player.getCurrentTime() - heyLetsDj.getSeekTime() );
+    var lastSkipDiff = +new Date() - lastSkipped;
+    if ((timeDiff > 1) && (lastSkipDiff > 3000)) {
+      lastSkipped = +new Date();
+      player.seekTo( heyLetsDj.getSeekTime() );
+      log('TRYING TO READAADAJUST THE TIME!!!!:::: '+timeDiff);
+      return 2;
+    }
+  }
+  return 1;
+}
+
+var safety = setInterval(updatePlayer, 4000);
+
+// heyLetsDj.onRefresh = function(playlistInfo) {
+//   // updateItAll();
+//   // if (heyLetsDj.status != 'stopped') {
+//   //   ytcrossfade.init('ytplayer-container',  heyLetsDj.playlist[0].videoId);    
+//   // }
+//   // updatePlayer();
+//   // updatePlaylist();
+// }
+// heyLetsDj.onAdd = function(entryInfo) {
+//   updateItAll();
+// }
+// heyLetsDj.onUpvote = function(entryId, voteCount, oldRank, newRank) {
+//   updateItAll();
+// }
+// heyLetsDj.onPlay = function(seekTime) {
+//   updateItAll();
+// }
+// heyLetsDj.onPause = function(seekTime) {
+//   updateItAll();
+// }
+// heyLetsDj.onSeek = function(seekTime) {
+//   updateItAll();
+// }
+// heyLetsDj.onStop = function() {
+//   updateItAll();
+// }
+// heyLetsDj.onNext = function(crossfadeSeconds) {
+//   updateItAll();
+// }
+
+
+
+heyLetsDj.start();
+
+$('#stop .overlay').click(function(){
+  heyLetsDj.stop();
+});
+$('#play .overlay').click(function(){
+  heyLetsDj.play();
+});
+$('#pause .overlay').click(function(){
+  heyLetsDj.pause();
+});
+$('#next .overlay').click(function(){
+  heyLetsDj.skip();
+});
+
+
+var i = null;
+$("body").mousemove(function() {
+    clearTimeout(i);
+    $("#ytplayer-overlay").removeClass('hidden');
+    i = setTimeout('$("#ytplayer-overlay").addClass("hidden");', 3000);
+})
+</script>
+</body>
+</html>

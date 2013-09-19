@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ playlistId }} Playlist</title>
+<!-- <meta name="viewport" content="width=device-width, user-scalable=no" /> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script--> 
+<script src="/_ah/channel/jsapi"></script>
+<script src="/js/jquery.min.js"></script> 
+<script src="/js/heyletsdj.js"></script> 
+<script type='text/javascript'>
+var heyLetsDj = new HeyLetsDj('{{ playlistId }}');
+</script>
+<link rel="stylesheet" type="text/css" href="./css/playlist.css" media="screen" />
+<style>
+</style>
+</head>
+<body class='playlist'>
+<div id='everything'>
+  <div id='content-container'>
+    <div id='main-container'>
+      <header>
+        <div class='brand'>
+          <div class='text'>Hey Let's DJ</div>
+        </div>
+        <div class='party'>
+          /{{ playlistId }}
+        </div>
+      </header>
+      <div id='now-playing-container' class='hidden'>
+        <div class='text'>
+          <div class='now-playing-label'>
+            Now Playing:
+          </div>
+          <div class='counter'>
+            
+          </div>
+          <div class='title'>
+            
+          </div>
+        </div>
+        <div class='thumb'>
+          <div class='gradient'></div>
+          <img src=''>
+        </div>
+      </div>
+      <div id='add-button-placeholder'>
+        <div id='add-button-container'>
+          <div id='add-button'>
+            <div class='plus'>+</div><div class='text'>Add Song</div>
+          </div>
+          <div id='add-button-gradient'></div>
+        </div>
+      </div>
+      <div id='instructions-container' class='hidden'>
+        <!-- <div id='instruction-icon'><em>i</em></div> -->
+        Vote up a song by clicking the up arrow.
+      </div>
+      <div id='playlist-container' style='height:0px;'>
+      </div>
+
+      <footer>
+        <div class='player-link-container'>
+          <a href='/{{ playlistId }}/player' target='_blank'>Launch Player</a>
+        </div>
+        <div>
+          <a href='/'>Home</a>
+          <a href='/about'>About</a>
+        </div>
+        <div class='brand'>
+          <div class='text'>Hey Let's DJ</div>
+        </div>
+      </footer>
+
+    </div>
+
+      <!-- ADD CONTAINER BELOW THIS PART -->
+      <div id='add-container-outer'>
+        <div id='add-container-inner'>
+          <div id='add-top-container'>
+            <div id='back-button'>
+              <div class='segment icon'>
+                <div class='icon'></div>
+              </div>
+              <div class='segment label'>Playlist</div>
+            </div>
+            <div id='search-input-container'>
+              <input type='text' name='search' id='search-input' placeholder='Search YouTube Music...'/>
+            </div>
+            <div id='search-button'>
+              <div class='icon'></div>
+            </div>
+          </div>
+          <div id='add-scroll-content'>
+            <div id='search-instructions'>Similar Videos</div>
+            <div id='search-result-label'></div>
+            <div id='search-loading-container'><div id='search-loading-text'></div></div>
+            <ol id='search-results'>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- END ADD OVERLAY -->
+
+      <div id='background-container'>
+        <div class='background main'></div>
+      </div>
+
+      <div id='overlay-container'>
+        <div id='overlay'>
+          <span id='overlay-inner'>Adding Song...</span>
+        </div>
+      </div>
+
+  </div>
+</div>
+</body>
+<script src='./js/playlist.js'></script>
+<script type='text/javascript'>
+</script>
+</html>

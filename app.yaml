@@ -1,0 +1,24 @@
+application: heyletsdj
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+- url: /assets
+  static_dir: assets
+
+- url: /css
+  static_dir: css
+
+- url: /js
+  static_dir: js
+
+- url: /action/.*
+  script: backend.app
+
+- url: /.*
+  script: main.app
+
+inbound_services:
+- channel_presence

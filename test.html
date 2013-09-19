@@ -1,0 +1,93 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Hey Let&apos;s DJ!</title>
+<script src="/_ah/channel/jsapi"></script>
+<script src="/js/heyletsdj.js"></script>
+<style>
+  html {
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+  h2 {
+    font-size: 1em;
+  }
+</style>
+<h1>Hey Let's DJ Test Page</h1>
+<h2>Playlist controls</h2>
+<p>
+  <input type="button" value="Add Love on Top" onclick="heyLetsDj.add('Ob7vObnFUJc')">
+  <input type="button" value="Add Single Ladies" onclick="heyLetsDj.add('4m1EFMoRFvY')">
+  <input type="button" value="Add Countdown Snuggie" onclick="heyLetsDj.add('w4aiwTkDwCY')">
+  <input type="button" value="Add Heartbreaker" onclick="heyLetsDj.add('vKNcuTWzTVw')">
+</p>
+<h2>Player controls</h2>
+<p>
+  <input type="button" value="Play" onclick="heyLetsDj.play()">
+  <input type="button" value="Pause" onclick="heyLetsDj.pause()">
+  <input type="button" value="Seek to 195" onclick="heyLetsDj.seek(195)">
+  <input type="button" value="Stop" onclick="heyLetsDj.stop()">
+  <input type="button" value="Skip" onclick="heyLetsDj.skip()">
+</p>
+<h2>Status</h2>
+<p>
+  <span id="status"></span><span id="seek-time"></span>
+</p>
+<h2>Playlist</h2>
+<ol id="playlist"></ol>
+<script>
+  function updateSeekTime() {
+    if (heyLetsDj.status == 'stopped') {
+      document.getElementById('seek-time').innerHTML = '';
+    }
+    else {
+      var seekTime = heyLetsDj.getSeekTime().toFixed(1);
+      var timeLeft = (heyLetsDj.playlist[0].duration - heyLetsDj.getSeekTime()).toFixed(1);
+      document.getElementById('seek-time').innerHTML =
+          ' at ' + seekTime + ' seconds. ' + timeLeft + ' seconds remaining.';
+    }
+
+    if (heyLetsDj.status == 'playing')
+      window.requestAnimationFrame(updateSeekTime);
+  }
+
+  function updatePlayer() {
+    document.getElementById('status').innerHTML = heyLetsDj.status;
+    updateSeekTime();
+  }
+
+  function updatePlaylist() {
+    var playlistNode = document.getElementById('playlist');
+    while (playlistNode.hasChildNodes())
+      playlistNode.removeChild(playlistNode.lastChild);
+    var length = heyLetsDj.playlist.length;
+    for (var i = 0; i < length; ++i) {
+      var entry = heyLetsDj.playlist[i];
+      var entryNode = document.createElement('li');
+      var upvoteNode;
+      var infoNode = document.createTextNode(
+          entry.voteCount + ' "' + entry.title + '", ' + entry.duration + ' seconds');
+
+      if (entry.voted) {
+        upvoteNode = document.createTextNode('Voted ');
+      }
+      else {
+        upvoteNode = document.createElement('input');
+        upvoteNode.type = 'button';
+        upvoteNode.value = 'Upvote';
+        upvoteNode.onclick = heyLetsDj.upvote.bind(heyLetsDj, entry.id);
+      }
+
+      entryNode.appendChild(upvoteNode);
+      entryNode.appendChild(infoNode);
+      playlistNode.appendChild(entryNode);
+    }
+  }
+
+  var heyLetsDj = new HeyLetsDj('{{ playlistId }}');
+  heyLetsDj.onPlayerUpdate = updatePlayer;
+  heyLetsDj.onPlaylistUpdate = updatePlaylist;
+  heyLetsDj.start();
+</script>
